@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    container_name: mysqlManagement
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pelisManagement
+      MYSQL_USER: rootAdmin
+      MYSQL_PASSWORD: root
+    hostname: db
+    networks:
+      - public
+  film-api:
+    image: dubansgupc/film_backend:1.0
+    ports:
+      - "8920:80"
+    environment:
+      - host=localhost
+      - username=rootAdmin
+      - password=root
+      - port=3306
+      - database=pelisManagement
+      - bucket=peliculas-backet
+      - AWS_SECRET_ACCESS_KEY="trXH+Ysd3IUfwW4OGkfCjXICVy5Nw+tZNFyTFAla" 
+      - AWS_ACCESS_KEY="AKIAXYKJTR5ZW3GWJ4NL" 
+    networks:
+      - public
+    hostname: back_end_notes
+networks:
+  public:
